@@ -1,4 +1,5 @@
 import basicInformation.Address;
+import devices.Device;
 import employees.Doctor;
 import employees.OfficeWorker;
 import hospital.structure.*;
@@ -83,5 +84,16 @@ public class Main {
         System.out.println(MedicineService.usageType(painkiller));
         System.out.println(MedicineService.usageType(antibiotic));
         System.out.println(MedicineService.usageType(antihistamine));
+        System.out.println("Displaying Medicine Serial Numbers:");
+        Hospital.displaySerialInfo(antihistamine);
+        Hospital.displaySerialInfo(antibiotic);
+        Device device1 = new Device("test1");
+        Device device2 = new Device("test2");
+
+        System.out.println("\nDisplaying Device Serial Numbers:");
+        Hospital.displaySerialInfo(device1);
+        Hospital.displaySerialInfo(device2);
+        patient1.treatmentProgram();
+        patient2.medicineSlot();
     }
 }

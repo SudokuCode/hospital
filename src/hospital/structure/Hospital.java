@@ -1,6 +1,8 @@
 package hospital.structure;
 
 import basicInformation.Address;
+import interfaces.SerializableNo;
+
 
 public final class Hospital {
 
@@ -18,6 +20,11 @@ public final class Hospital {
     public static void CurrentVacancy() {
 
         System.out.println("Current patients: " + currentPatients);
+    }
+
+    // Method that accepts any object implementing SerializableNo
+    public static void displaySerialInfo(SerializableNo item) {
+        System.out.println("Serial Number: " + item.getSerialNumber());
     }
 
     public String getName() {
