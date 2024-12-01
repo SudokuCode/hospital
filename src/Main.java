@@ -1,5 +1,6 @@
 import basicInformation.Address;
 import devices.Device;
+import devices.DeviceArchive;
 import employees.Doctor;
 import employees.OfficeWorker;
 import hospital.structure.*;
@@ -7,21 +8,27 @@ import medicines.Antibiotic;
 import medicines.Antihistamine;
 import medicines.Medicine;
 import medicines.MedicineService;
+import patients.MedicalHistory;
 import patients.Patient;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /* TODO list :
 Create 5 custom exceptions (checked and unchecked) and use them in your program
 Handle exceptions (using throws and try-catch-finally)
-Use try-catch with resources (create at least one class that implements the AutoCloseable interface and close it using the try with resources
-and use at least one class built into Java that implements this interface, and close it as well) */
+
+Update all arrays with collections (your project must have at least 5 collections - at least one List, one Set and one Map)
+
+(optional) Create custom LinkedList class with generic. (this class must implement the List interface)*/
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Reception reception = new Reception();
         Finance finance = new Finance();
@@ -87,13 +94,31 @@ public class Main {
         System.out.println("Displaying Medicine Serial Numbers:");
         Hospital.displaySerialInfo(antihistamine);
         Hospital.displaySerialInfo(antibiotic);
-        Device device1 = new Device("test1");
-        Device device2 = new Device("test2");
+        Device device1 = new Device("Laptop");
+        Device device2 = new Device("Printer");
+        Device device3 = new Device("Monitor");
+        List<Device> devices = new ArrayList<>();
+        devices.add(device1);
+        devices.add(device2);
+        devices.add(device3);
+        try (DeviceArchive archive = new DeviceArchive("devices.txt")) {
+            archive.saveDevices(devices);  // Save devices to the file
+        } catch (IOException e) {
+            System.out.println("Error saving devices: " + e.getMessage());
 
-        System.out.println("\nDisplaying Device Serial Numbers:");
-        Hospital.displaySerialInfo(device1);
-        Hospital.displaySerialInfo(device2);
-        patient1.treatmentProgram();
-        patient2.medicineSlot();
+            System.out.println("\nDisplaying Device Serial Numbers:");
+            Hospital.displaySerialInfo(device1);
+            Hospital.displaySerialInfo(device2);
+            Hospital.displaySerialInfo(device3);
+            patient1.treatmentProgram();
+            patient2.medicineSlot();
+            MedicalHistory patient1history = new MedicalHistory("patient1.txt");
+            patient1history.writeMedicalHistory(patient1, "Dose of the medicine applied : 32");
+            patient1history.readMedicalHistory();
+
+        }
     }
 }
+
+
+
