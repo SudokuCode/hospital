@@ -15,7 +15,10 @@ public class Device implements SerializableNo {
     }
 
     @Override
-    public String getSerialNumber() {
+    public String getSerialNumber() throws SerialException {
+        if (serialNo == null || serialNo.isEmpty()) {
+            throw new SerialException("Serial number is missing for this device.");
+        }
         return serialNo;
     }
 

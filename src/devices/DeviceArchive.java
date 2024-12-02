@@ -15,7 +15,7 @@ public class DeviceArchive implements AutoCloseable {
     }
 
     // Method to save a list of devices to the file
-    public void saveDevices(List<Device> devices) throws IOException {
+    public void saveDevices(List<Device> devices) throws IOException, SerialException {
         for (Device device : devices) {
             writer.write("Device Name: " + device.getName());
             writer.newLine();

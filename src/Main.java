@@ -1,6 +1,8 @@
 import basicInformation.Address;
+import basicInformation.AddressException;
 import devices.Device;
 import devices.DeviceArchive;
+import devices.SerialException;
 import employees.Doctor;
 import employees.OfficeWorker;
 import hospital.structure.*;
@@ -18,17 +20,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/* TODO list :
-Create 5 custom exceptions (checked and unchecked) and use them in your program
-Handle exceptions (using throws and try-catch-finally)
-
+/*
+TODO list :
 Update all arrays with collections (your project must have at least 5 collections - at least one List, one Set and one Map)
-
-(optional) Create custom LinkedList class with generic. (this class must implement the List interface)*/
+(optional) Create custom LinkedList class with generic. (this class must implement the List interface)
+ */
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws AddressException {
 
         Reception reception = new Reception();
         Finance finance = new Finance();
@@ -36,20 +36,44 @@ public class Main {
         Neurology neurology = new Neurology();
         Patient patient1 = new Patient("Mat", "Cat");
         Patient patient2 = new Patient("John", "Wick");
+        Patient patient3 = new Patient();
         Address hospitalAddress = new Address("Jagiellonska", 123, "Warszawa", "00-230");
         Hospital hospital = new Hospital();
         hospital.setName("St.Joseph");
         hospital.setDepartments(new Department[]{reception});
         hospital.setDepartments(new Department[]{finance});
         hospital.setBranches(new Branch[]{pulmonology, neurology});
+        pulmonology.setMaxCapacity(2);
         hospital.setAddress(hospitalAddress);
-        System.out.println(Arrays.toString(hospital.getBranches()));
+        Hospital hospitalTest = new Hospital();
+        try {
+            hospitalTest.getBranches();
+        } catch (HospitalException e) {
+            System.out.println("Exception caught: " + e.getMessage());
+        }
+
+        try {
+            System.out.println(Arrays.toString(hospital.getBranches()));
+        } catch (HospitalException e) {
+            throw new RuntimeException(e);
+        } finally {
+            System.out.println("Branches should be declared following the Branch rules");
+        }
 
         reception.register(patient1, neurology);
+        reception.register(patient2, pulmonology);
+        reception.register(patient3, pulmonology);
         System.out.println(reception.register(patient2, neurology));
+        System.out.println(reception.register(patient3, pulmonology));
         reception.showPatient(pulmonology);
         reception.showPatient(neurology);
         System.out.println(hospitalAddress);
+        try {
+            pulmonology.addPatient(new Patient("Emily", "Brown"));
+
+        } catch (CapacityException e) {
+            System.out.println("Branch excetption cought! ->" + e.getMessage());
+        }
 
         OfficeWorker receptionist = new OfficeWorker("Ann", "Lee", "receptionist");
         OfficeWorker receptionist2 = new OfficeWorker("Jack", "Two", "receptionist");
@@ -94,6 +118,7 @@ public class Main {
         System.out.println("Displaying Medicine Serial Numbers:");
         Hospital.displaySerialInfo(antihistamine);
         Hospital.displaySerialInfo(antibiotic);
+
         Device device1 = new Device("Laptop");
         Device device2 = new Device("Printer");
         Device device3 = new Device("Monitor");
@@ -113,10 +138,24 @@ public class Main {
             patient1.treatmentProgram();
             patient2.medicineSlot();
             MedicalHistory patient1history = new MedicalHistory("patient1.txt");
-            patient1history.writeMedicalHistory(patient1, "Dose of the medicine applied : 32");
-            patient1history.readMedicalHistory();
-
+            try {
+                patient1history.writeMedicalHistory(patient1, "Dose of the medicine applied : 32");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                patient1history.readMedicalHistory();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        } catch (SerialException e) {
+            throw new RuntimeException(e);
         }
+        antibiotic.setStock(10);
+        System.out.println("Stock set to: " + antibiotic.getStock());
+
+        // Attempt to set stock to a negative value (throws MedicineException)
+        painkiller.setStock(-5);
     }
 }
 

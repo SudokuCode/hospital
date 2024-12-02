@@ -30,6 +30,9 @@ public class Medicine implements SerializableNo {
     }
 
     public void setStock(Integer stock) {
+        if (stock < 0) {
+            throw new StockException("Stock cannot be negative.");
+        }
         this.stock = stock;
     }
 

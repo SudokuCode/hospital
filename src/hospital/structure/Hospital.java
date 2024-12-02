@@ -1,6 +1,7 @@
 package hospital.structure;
 
 import basicInformation.Address;
+import devices.SerialException;
 import interfaces.SerializableNo;
 
 
@@ -24,7 +25,11 @@ public final class Hospital {
 
     // Method that accepts any object implementing SerializableNo
     public static void displaySerialInfo(SerializableNo item) {
-        System.out.println("Serial Number: " + item.getSerialNumber());
+        try {
+            System.out.println("Serial Number: " + item.getSerialNumber());
+        } catch (SerialException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getName() {
@@ -35,7 +40,10 @@ public final class Hospital {
         this.name = name;
     }
 
-    public Department[] getDepartments() {
+    public Department[] getDepartments() throws HospitalException {
+        if (departments == null) {
+            throw new HospitalException("Departments have not been initialized");
+        }
         return departments;
     }
 
@@ -43,7 +51,10 @@ public final class Hospital {
         this.departments = departments;
     }
 
-    public Branch[] getBranches() {
+    public Branch[] getBranches() throws HospitalException {
+        if (branches == null) {
+            throw new HospitalException("Branches have not been initialized");
+        }
         return branches;
     }
 

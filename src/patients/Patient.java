@@ -15,6 +15,11 @@ public class Patient implements Curable {
         this.surname = surname;
     }
 
+    public Patient() {
+        this.name = "Gal";
+        this.surname = "Anonim";
+    }
+
     public String getName() {
         return name;
     }

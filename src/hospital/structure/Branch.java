@@ -26,7 +26,7 @@ public abstract class Branch implements CapacityManager, Registrable {
 
     public void setMaxCapacity(int capacity) {
         if (capacity < currentCapacity)
-            System.out.println("The maximum capacity must not be less than the number of current patients");
+            throw new CapacityException("The maximum capacity is reached !!! ");
         this.maxCapacity = capacity;
     }
 
@@ -36,12 +36,13 @@ public abstract class Branch implements CapacityManager, Registrable {
     }
 
     public void addPatient(Patient patient) {
-        patients = Arrays.copyOf(patients, patients.length + 1);
-        if (canRegister()) {
-            patients[currentCapacity] = patient;
-            currentCapacity++; // counts beds which are used in a branch
-            Hospital.currentPatients++; // counts all patients in hospital
+        if (!canRegister()) {
+            throw new CapacityException(" Cannot add more patients, please check maximum Branch capacity.");
         }
+        patients = Arrays.copyOf(patients, patients.length + 1);
+        patients[currentCapacity] = patient;
+        currentCapacity++; // counts beds which are used in a branch
+        Hospital.currentPatients++; // counts all patients in hospital
     }
 
     public void showPatients() {

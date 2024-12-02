@@ -1,7 +1,9 @@
 package interfaces;
 
+import devices.SerialException;
+
 import java.io.Serializable;
 
 public interface SerializableNo extends Serializable {
-    String getSerialNumber();
+    String getSerialNumber() throws SerialException;
 }

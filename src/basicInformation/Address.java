@@ -7,7 +7,13 @@ public class Address {
     private String city;
     private String postcode;
 
-    public Address(String street, int number, String city, String postcode) {
+    public Address(String street, int number, String city, String postcode) throws AddressException {
+        if (number <= 0) {
+            throw new AddressException("Number must be greater than zero.");
+        }
+        if (postcode == null || postcode.isEmpty()) {
+            throw new AddressException("Postcode cannot be null or empty.");
+        }
         this.street = street;
         this.number = number;
         this.city = city;
@@ -31,7 +37,10 @@ public class Address {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(int number) throws AddressException {
+        if (number <= 0) {
+            throw new AddressException("Number must be greater than zero.");
+        }
         this.number = number;
     }
 
@@ -47,9 +56,10 @@ public class Address {
         return postcode;
     }
 
-    public void setPostcode(String postcode) {
+    public void setPostcode(String postcode) throws AddressException {
+        if (postcode == null || postcode.isEmpty()) {
+            throw new AddressException("Postcode cannot be null or empty.");
+        }
         this.postcode = postcode;
     }
 }
-
-
