@@ -6,7 +6,7 @@ public class Device implements SerializableNo {
 
     private static int counter = 0;
     private final String serialNo;
-    private String name;
+    private final String name;
 
     public Device(String name) {
         this.name = name;

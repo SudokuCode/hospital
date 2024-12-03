@@ -4,10 +4,13 @@ import employees.Employee;
 import interfaces.CapacityManager;
 import interfaces.Registrable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public abstract class Department implements CapacityManager, Registrable {
 
-    protected Employee[] employees = new Employee[0];
+    protected List<Employee> employees = new ArrayList<>();
 
     public abstract void addEmployee(Employee employee);
 

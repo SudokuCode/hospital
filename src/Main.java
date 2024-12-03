@@ -17,13 +17,16 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /*
 TODO list :
-Update all arrays with collections (your project must have at least 5 collections - at least one List, one Set and one Map)
+Set and Map
 (optional) Create custom LinkedList class with generic. (this class must implement the List interface)
+Move your project to Maven.
+Build jar file using Maven and deploy to the local repository. (local repository is ".m2" folder
+ - deploy using "install" command)
+Run mvn for different phases from the Maven lifecycle. Check the result.
  */
 
 public class Main {
@@ -40,9 +43,9 @@ public class Main {
         Address hospitalAddress = new Address("Jagiellonska", 123, "Warszawa", "00-230");
         Hospital hospital = new Hospital();
         hospital.setName("St.Joseph");
-        hospital.setDepartments(new Department[]{reception});
-        hospital.setDepartments(new Department[]{finance});
-        hospital.setBranches(new Branch[]{pulmonology, neurology});
+        hospital.setDepartments(List.of(new Department[]{reception}));
+        hospital.setDepartments(List.of(new Department[]{finance}));
+        hospital.setBranches(List.of(new Branch[]{pulmonology, neurology}));
         pulmonology.setMaxCapacity(2);
         hospital.setAddress(hospitalAddress);
         Hospital hospitalTest = new Hospital();
@@ -53,7 +56,7 @@ public class Main {
         }
 
         try {
-            System.out.println(Arrays.toString(hospital.getBranches()));
+            System.out.println((hospital.getBranches()));
         } catch (HospitalException e) {
             throw new RuntimeException(e);
         } finally {

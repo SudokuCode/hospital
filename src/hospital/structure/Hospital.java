@@ -4,6 +4,9 @@ import basicInformation.Address;
 import devices.SerialException;
 import interfaces.SerializableNo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public final class Hospital {
 
@@ -14,8 +17,8 @@ public final class Hospital {
     }
 
     private String name;
-    private Department[] departments;
-    private Branch[] branches;
+    private List<Department> departments = new ArrayList<>();
+    private List<Branch> branches = new ArrayList<>();
     private Address address;
 
     public static void CurrentVacancy() {
@@ -40,25 +43,25 @@ public final class Hospital {
         this.name = name;
     }
 
-    public Department[] getDepartments() throws HospitalException {
+    public List<Department> getDepartments() throws HospitalException {
         if (departments == null) {
             throw new HospitalException("Departments have not been initialized");
         }
         return departments;
     }
 
-    public void setDepartments(Department[] departments) {
+    public void setDepartments(List<Department> departments) {
         this.departments = departments;
     }
 
-    public Branch[] getBranches() throws HospitalException {
+    public List<Branch> getBranches() throws HospitalException {
         if (branches == null) {
             throw new HospitalException("Branches have not been initialized");
         }
         return branches;
     }
 
-    public void setBranches(Branch[] branches) {
+    public void setBranches(List<Branch> branches) {
         this.branches = branches;
     }
 

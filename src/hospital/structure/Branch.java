@@ -5,17 +5,18 @@ import interfaces.CapacityManager;
 import interfaces.Registrable;
 import patients.Patient;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Branch implements CapacityManager, Registrable {
 
     protected String name;
-    protected Doctor[] doctors;
+    protected List<Doctor> doctors = new ArrayList<>();
     protected int currentCapacity = 0;
     protected int maxCapacity;
-    protected Patient[] patients = new Patient[0];
+    protected List<Patient> patients = new ArrayList<>();
 
-    public Patient[] getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 
@@ -39,8 +40,8 @@ public abstract class Branch implements CapacityManager, Registrable {
         if (!canRegister()) {
             throw new CapacityException(" Cannot add more patients, please check maximum Branch capacity.");
         }
-        patients = Arrays.copyOf(patients, patients.length + 1);
-        patients[currentCapacity] = patient;
+        patients.add(patient);
+        patients.set(currentCapacity, patient);
         currentCapacity++; // counts beds which are used in a branch
         Hospital.currentPatients++; // counts all patients in hospital
     }
@@ -50,17 +51,16 @@ public abstract class Branch implements CapacityManager, Registrable {
             System.out.println("No patients in " + name);
         } else {
             for (int i = 0; i < currentCapacity; i++) {
-                System.out.println((i + 1) + "- " + patients[i].getName());
+                System.out.println((i + 1) + "- " + patients.get(i).getName());
             }
         }
     }
 
-    public Doctor[] getDoctors() {
+    public List<Doctor> getDoctors() {
         return doctors;
     }
 
-    public void setDoctors(Doctor[] doctors) {
+    public void setDoctors(List<Doctor> doctors) {
         this.doctors = doctors;
     }
-
 }

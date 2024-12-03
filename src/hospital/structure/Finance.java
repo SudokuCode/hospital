@@ -4,17 +4,17 @@ import employees.Employee;
 import employees.OfficeWorker;
 
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.List;
 
 public class Finance extends Department {
 
     private LocalDate date;
 
-    public Employee[] getEmployees() {
+    public List<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(OfficeWorker[] employees) {
+    public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
 
@@ -29,9 +29,8 @@ public class Finance extends Department {
     @Override
     public void addEmployee(Employee employee) {
         if (canRegister()) {
-            this.employees = Arrays.copyOf(this.employees, this.employees.length + 1);
             if (employee instanceof OfficeWorker) {
-                this.employees[this.employees.length - 1] = employee;
+                employees.add(employee);
             } else {
                 System.out.println("Only OfficeWorkers can be added to Finance.");
             }
@@ -44,7 +43,7 @@ public class Finance extends Department {
     @Override
     public boolean canRegister() {
 
-        return employees.length < getMaxCapacity();
+        return employees.size() < getMaxCapacity();
     }
 
     @Override

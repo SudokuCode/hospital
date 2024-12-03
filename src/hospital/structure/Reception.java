@@ -5,7 +5,6 @@ import employees.OfficeWorker;
 import patients.Patient;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public class Reception extends Department {
 
@@ -15,12 +14,9 @@ public class Reception extends Department {
     public void addEmployee(Employee employee) {
 
         if (canRegister()) {
-            employees = Arrays.copyOf(employees, employees.length + 1);
             if (employee instanceof OfficeWorker) {
-                employees[employees.length - 1] = employee;
-            } else {
+                employees.add(employee);
                 System.out.println("Only OfficeWorkers can be added to Reception.");
-                return;
             }
             System.out.println("Employee added to Reception");
         } else {
@@ -47,18 +43,10 @@ public class Reception extends Department {
         }
     }
 
-    public OfficeWorker[] getWorkers() {
-        return (OfficeWorker[]) employees;
-    }
-
-    public void setWorkers(OfficeWorker[] workers) {
-        this.employees = workers;
-    }
-
     @Override
     public boolean canRegister() {
 
-        return employees.length < getMaxCapacity();
+        return employees.size() < getMaxCapacity();
     }
 
     @Override
