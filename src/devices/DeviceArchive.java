@@ -2,7 +2,6 @@ package devices;
 
 import java.io.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class DeviceArchive implements AutoCloseable {
@@ -15,9 +14,9 @@ public class DeviceArchive implements AutoCloseable {
     }
 
     // Method to save a list of devices to the file
-    public void saveDevices(List<Device> devices) throws IOException, SerialException {
+    public void saveDevices(Set<Device> devices) throws IOException, SerialException {
         Set<String> serials = new HashSet<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("devices.txt"))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader("devices.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("Serial Number: ")) {

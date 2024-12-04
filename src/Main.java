@@ -16,17 +16,28 @@ import patients.Patient;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /*
 TODO list :
-Set and Map
+MedicineService - 'if' statement can be replaced with 'switch' statement
+Patient - Variable 'timeSlots' is never used
+Reception - Parameter 'date' is never used
+DeviceArchive - Exception 'java.io.IOException' is never thrown in the method
 (optional) Create custom LinkedList class with generic. (this class must implement the List interface)
+
+Map
 Move your project to Maven.
 Build jar file using Maven and deploy to the local repository. (local repository is ".m2" folder
  - deploy using "install" command)
 Run mvn for different phases from the Maven lifecycle. Check the result.
+Read text from the file (download any online book or article in txt format and move it to resources folder)
+and calculate the numbers of the unique words. Write the result to the file.
+The main requirement is:
+using StringUtils and FileUtils (from Apache libraries) to implement it with minimum lines of code.
+Replace all the "System.out.println" with Logger. Your loggers should log in two places - in the console and in a file
  */
 
 public class Main {
@@ -125,12 +136,12 @@ public class Main {
         Device device1 = new Device("Laptop");
         Device device2 = new Device("Printer");
         Device device3 = new Device("Monitor");
-        List<Device> devices = new ArrayList<>();
+        Set<Device> devices = new HashSet<>();
         devices.add(device1);
         devices.add(device2);
         devices.add(device3);
         try (DeviceArchive archive = new DeviceArchive("devices.txt")) {
-            archive.saveDevices(devices);  // Save devices to the file
+            archive.saveDevices((Set<Device>) devices);  // Save devices to the file
         } catch (IOException e) {
             System.out.println("Error saving devices: " + e.getMessage());
 

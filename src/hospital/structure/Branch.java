@@ -16,6 +16,7 @@ public abstract class Branch implements CapacityManager, Registrable {
     protected int maxCapacity;
     protected List<Patient> patients = new ArrayList<>();
 
+
     public List<Patient> getPatients() {
         return patients;
     }
