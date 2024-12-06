@@ -27,8 +27,6 @@ Patient - Variable 'timeSlots' is never used
 Reception - Parameter 'date' is never used
 DeviceArchive - Exception 'java.io.IOException' is never thrown in the method
 (optional) Create custom LinkedList class with generic. (this class must implement the List interface)
-
-Map
 Move your project to Maven.
 Build jar file using Maven and deploy to the local repository. (local repository is ".m2" folder
  - deploy using "install" command)
@@ -167,6 +165,11 @@ public class Main {
         }
         antibiotic.setStock(10);
         System.out.println("Stock set to: " + antibiotic.getStock());
+
+        pulmonology.addMedicine(painkiller);
+        pulmonology.addMedicine(antibiotic);
+        pulmonology.showMedicines();
+        pulmonology.addMedicine(painkiller);
 
         // Attempt to set stock to a negative value (throws MedicineException)
         painkiller.setStock(-5);

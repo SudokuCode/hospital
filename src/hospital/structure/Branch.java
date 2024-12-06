@@ -3,10 +3,13 @@ package hospital.structure;
 import employees.Doctor;
 import interfaces.CapacityManager;
 import interfaces.Registrable;
+import medicines.Medicine;
 import patients.Patient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Branch implements CapacityManager, Registrable {
 
@@ -15,7 +18,7 @@ public abstract class Branch implements CapacityManager, Registrable {
     protected int currentCapacity = 0;
     protected int maxCapacity;
     protected List<Patient> patients = new ArrayList<>();
-
+    protected Map<String, String> medicines = new HashMap<>();
 
     public List<Patient> getPatients() {
         return patients;
@@ -63,5 +66,27 @@ public abstract class Branch implements CapacityManager, Registrable {
 
     public void setDoctors(List<Doctor> doctors) {
         this.doctors = doctors;
+    }
+
+    public void addMedicine(Medicine medicine) {
+        String serialNo = medicine.getSerialNumber();
+        String name = medicine.getName();
+        if (medicines.containsKey(serialNo)) {
+            System.out.println("Medicine with serial number " + serialNo + " already exists.");
+        } else {
+            medicines.put(serialNo, name);
+            System.out.println("Medicine added: " + name + " (Serial: " + serialNo + ")");
+        }
+    }
+
+    public void showMedicines() {
+        if (medicines.isEmpty()) {
+            System.out.println("No medicines available in " + name);
+        } else {
+            System.out.println("Medicines in " + name + ":");
+            for (Map.Entry<String, String> entry : medicines.entrySet()) {
+                System.out.println("Serial Number: " + entry.getKey() + ", Name: " + entry.getValue());
+            }
+        }
     }
 }
